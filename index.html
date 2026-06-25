@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glosario Técnico Interactivo - Nexus</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#0b1f3a;color:white}
+header{background:#102b52;padding:30px 20px;text-align:center}
+h1{color:#d4af37;margin-bottom:5px}
+.logo-nexus{max-width:150px;margin: 20px auto; display: block;}
+.container{max-width:900px;margin:auto;padding:20px}
+.search{width:100%;padding:14px;border:none;border-radius:10px;font-size:16px; margin-bottom: 10px; box-sizing: border-box;}
+.counter{text-align:center;color:#d4af37;margin:15px 0; font-weight: bold;}
+.term{width:100%;background:#d4af37;color:#0b1f3a;border:none;border-radius:10px;padding:14px;margin-top:10px;text-align:left;font-weight:bold;font-size:16px;cursor:pointer;transition: background 0.3s;}
+.term:hover{background:#b8952e;}
+.content{display:none;background:#183a6b;padding:15px;border-radius:0 0 10px 10px}
+audio{width:100%;margin-top:10px}
+.subtheme{text-align:center;color:#d4af37;margin-top: 10px; font-weight: bold;}
+.footer{text-align:center;padding:25px;color:#ccc}
+</style>
+</head>
+<body>
+<header>
+<img src="IMG-20260624-WA0166(1).jpg" alt="Logo de Nexus Servicios Empresariales" class="logo-nexus"> 
+<h1>NEXUS</h1>
+<p><strong>Nexus Servicios Empresariales S.A. de C.V.</strong></p>
+<p>Tu aliado estratégico en gestión empresarial</p>
+<div class="subtheme">6: Inspección Laboral y Previsional<br>Glosario Técnico</div> 
+<h2>Glosario Técnico Interactivo</h2>
+</header>
+
+<div class="container">
+<p>Seleccione un término para consultar su definición y escuchar su explicación en audio.</p>
+<input class="search" id="search" placeholder="Buscar término...">
+<div class="counter" id="counter">4 términos disponibles</div>
+
+    <!-- 1. Cotización Previsional -->
+    <div class="item">
+      <button class="term">Cotización Previsional</button>
+      <div class="content">
+        <p>Aporte económico obligatorio realizado por trabajadores y empleadores para financiar el Sistema de Ahorro para Pensiones y garantizar beneficios futuros de jubilación.</p>
+        <audio controls preload="none">
+          <source src="audio/Cotización Provisional.ogg" type="audio/ogg">
+        </audio>
+      </div>
+    </div>
+    
+    <!-- 2. Inscripción Patronal -->
+    <div class="item">
+      <button class="term">Inscripción Patronal</button>
+      <div class="content">
+        <p>Proceso mediante el cual un empleador registra oficialmente su empresa ante instituciones correspondientes.</p>
+        <audio controls preload="none">
+          <source src="audio/Inscripción Patronal.ogg" type="audio/ogg">
+        </audio>
+      </div>
+    </div>
+    
+    <!-- 3. Patrono -->
+    <div class="item">
+      <button class="term">Patrono</button>
+      <div class="content">
+        <p>Persona natural o jurídica que contrata trabajadores a cambio de remuneración.</p>
+        <audio controls preload="none">
+          <source src="audio/Patrono.ogg" type="audio/ogg">
+        </audio>
+      </div>
+    </div>
+    
+    <!-- 4. Sistema de Ahorro para Pensiones (SAP) -->
+    <div class="item">
+      <button class="term">Sistema de Ahorro para Pensiones (SAP)</button>
+      <div class="content">
+        <p>Sistema previsional destinado a administrar fondos de ahorro para el retiro.</p>
+        <audio controls preload="none">
+          <source src="audio/Sistema de Ahorro para Pensiones SAP.ogg" type="audio/ogg">
+        </audio>
+      </div>
+    </div>
+    
+</div>
+
+<div class="footer">Proyecto académico - Glosario Técnico Interactivo Nexus</div>
+
+<script>
+const terms = document.querySelectorAll('.term');
+const counterEl = document.getElementById('counter');
+
+// Detiene todos los audios para evitar solapamientos
+function stopAllAudio() {
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+}
+
+// Control de acordeón para abrir y cerrar términos
+terms.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const content = btn.nextElementSibling;
+    const isAlreadyOpen = content.style.display === 'block';
+
+    stopAllAudio();
+
+    document.querySelectorAll('.content').forEach(c => {
+      c.style.display = 'none';
+    });
+
+    content.style.display = isAlreadyOpen ? 'none' : 'block';
+  });
+});
+
+// Buscador e indicador dinámico de cantidad
+document.getElementById('search').addEventListener('input', function() {
+  const val = this.value.toLowerCase();
+  let visibleCount = 0;
+
+  document.querySelectorAll('.item').forEach(item => {
+    const text = item.innerText.toLowerCase();
+    if (text.includes(val)) {
+      item.style.display = 'block';
+      visibleCount++;
+    } else {
+      item.style.display = 'none';
+      const audio = item.querySelector('audio');
+      if(audio) { audio.pause(); audio.currentTime = 0; }
+    }
+  });
+
+  counterEl.textContent = `${visibleCount} término${visibleCount === 1 ? '' : 's'} disponible${visibleCount === 1 ? '' : 's'}`;
+});
+</script>
+</body>
+  </html>
